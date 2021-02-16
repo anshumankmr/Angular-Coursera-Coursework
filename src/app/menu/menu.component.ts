@@ -48,6 +48,7 @@ const DISHES: Dish[] =  [
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
+
 export class MenuComponent implements OnInit {
   dishes: Dish[] = DISHES;
   selectedDish: Dish = DISHES[0];

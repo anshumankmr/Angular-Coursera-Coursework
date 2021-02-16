@@ -1,0 +1,38 @@
+<div class="container"
+    fxLayout="row"
+    fxLayout.sm="column"
+    fxLayout.xs="column"
+    fxLayoutAlign.gt-md="space-around center"
+    fxLayoutGap="10px" 
+    fxLayoutGap.xs="0">
+
+  <div fxFlex="40" *ngIf="particularDish">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h3> {{particularDish.name}}</h3>
+            </mat-card-title>
+
+        </mat-card-header>
+         <img mat-card-image  src={{particularDish.image}} alt={{particularDish.name}}>
+        <mat-card-content>
+            <p> {{particularDish.description}} </p>
+        </mat-card-content> 
+    </mat-card> 
+  </div>
+
+  <div fxFlex="40">
+    <!-- <p>Display the list of comments here</p> -->
+    <mat-list>
+        <mat-list-item *ngFor="let com of particularDish.comments">
+                <h1 matLine class="big-font">{{com.rating}}</h1>
+                <h2 matLine class="big-font">{{com.comment}}</h2>
+                <h1 matLine>{{ com.author}}</h1>
+                <h1 matLine>{{com.date|date}}</h1>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+</mat-list>
+  </div>
+
+</div>
