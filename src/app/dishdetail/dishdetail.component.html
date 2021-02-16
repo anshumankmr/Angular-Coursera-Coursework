@@ -1,50 +1,45 @@
-
 <div class="container"
-fxLayout="row"
-fxLayout.sm="column"
-fxLayout.xs="column"
-fxLayoutAlign.gt-md="space-around center"
-fxLayoutGap="10px"
-fxLayoutGap.xs="0">
+    fxLayout="row"
+    fxLayout.sm="column"
+    fxLayout.xs="column"
+    fxLayoutAlign.gt-md="space-around center"
+    fxLayoutGap="10px" 
+    fxLayoutGap.xs="0">
 
-<div fxFlex="40" *ngIf="dish">
-<mat-card>
- <mat-card-header>
-   <mat-card-title>
-     <h3>{{dish.name | uppercase}}</h3>
-   </mat-card-title>
- </mat-card-header>
- <img mat-card-image src={{dish.image}} alt={{dish.name}}>
- <mat-card-content>
-   <p>{{dish.description}}
-   </p>
- </mat-card-content>
- <mat-card-actions>
-   <button mat-button>LIKE</button>
-   <button mat-button>SHARE</button>
- </mat-card-actions>
-</mat-card>
-</div>
+  <div fxFlex="40" *ngIf="dish">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h3> {{dish.name}}</h3>
+            </mat-card-title>
 
-<div fxFlex="40" *ngIf="dish">
-<h2>Comments</h2>
-<mat-list *ngIf="dish">
- <mat-list-item *ngFor="let comment of dish.comments"
-                class="container"
- >
-   <div fxLayout="row wrap">
-     <span fxFlex="100">
-       {{ comment.comment }}
-     </span>
-     <span fxFlex="100">
-       {{ comment.rating }} Stars
-     </span>
-     <span fxFlex="100">
-       -- {{ comment.author }} {{ comment.date | date}}
-     </span>
-   </div>
- </mat-list-item>
+        </mat-card-header>
+         <img mat-card-image  src={{dish.image}} alt={{dish.name}}>
+        <mat-card-content>
+            <p> {{dish.description}} </p>
+        </mat-card-content> 
+        <mat-card-actions>
+            <button mat-button>
+                LIKE      
+            </button>
+            <button mat-button>
+                SHARE
+            </button>
+        </mat-card-actions>
+    </mat-card> 
+  </div>
+
+  <div fxFlex="40">
+    <h3>Comments</h3>
+    <mat-list>
+        <mat-list-item *ngFor="let com of dish.comments">
+                <h1 matLine class="big-font">{{com.rating}} Stars</h1>
+                <h1 matLine class="big-font">{{com.comment}}</h1>
+                <h1 matLine>--{{ com.author}} - {{com.date|date}}</h1>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
 </mat-list>
-</div>
+  </div>
 
 </div>
