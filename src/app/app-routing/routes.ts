@@ -11,7 +11,9 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 export const routes: Routes = [
-    {path: 'home' , component: HomeComponent},
+    { path: 'home' , component: HomeComponent},
     { path: 'menu' , component: MenuComponent},
-    {path: '', redirectTo:'/home',pathMatch:'full'}
+    { path: 'contactus', component: ContactComponent},
+    { path: 'dishdetail/:id', component: DishdetailComponent},
+    { path: '', redirectTo:'/home',pathMatch:'full'}
 ];

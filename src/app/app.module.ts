@@ -20,6 +20,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { DishService } from "./services/dish.service";
+import { PromotionService } from './services/promotion.service';
 
 import { AppRoutingModule } from "./app-routing/app-routing.module";
 @NgModule({
@@ -47,7 +48,7 @@ import { AppRoutingModule } from "./app-routing/app-routing.module";
   ],
   exports: [ DishdetailComponent, MenuComponent ],
 
-  providers: [DishService] ,// a service that must be a provider will provide to the whole application
+  providers: [DishService,PromotionService] ,// a service that must be a provider will provide to the whole application
   bootstrap: [AppComponent]
 })
 export class AppModule { }
