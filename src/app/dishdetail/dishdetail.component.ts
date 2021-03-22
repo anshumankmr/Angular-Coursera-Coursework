@@ -11,7 +11,7 @@ import { Route } from '@angular/compiler/src/core';
 })
 export class DishdetailComponent implements OnInit {
   // @Input()
-  dish : Dish = new Dish();
+  dish !: Dish;
   constructor(private dishService: DishService , private location: Location, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
