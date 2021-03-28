@@ -5,15 +5,17 @@
 </mat-toolbar>
 <p> {{  user | json }} </p> 
 <!-- used to have the real time changes be shown in them object -->
-<form novalidate (ngSubmit)="onSubmit()">
+<form novalidate (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <mat-dialog-content>
         <p>
             <mat-form-field>
-                <input matInput placeholder="User Name" type="text" name="username" [(ngModel)]="user.username"> 
+                <input matInput placeholder="User Name" type="text" name="username" [(ngModel)]="user.username" #username="ngModel" required> 
+                <mat-error *ngIf="username.errors?.required"> User Name is required</mat-error>
             </mat-form-field>
             <br/>
             <mat-form-field>
-                <input matInput placeholder="Password" type="text" name="Password" [(ngModel)]="user.password"> 
+                <input matInput placeholder="Password" type="password" name="Password" [(ngModel)]="user.password" #password="ngModel" required> 
+                <mat-error *ngIf="password.errors?.required"> Password is required</mat-error>  
             </mat-form-field>
             <mat-checkbox [(ngModel)]="user.remember" name="Remember Me">
             </mat-checkbox>
@@ -22,6 +24,6 @@
     <mat-dialog-actions>
         <span class="flex-spacer"></span>
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button type="submit" class="background-primary text-floral-white">Submit</button>
+        <button mat-button type="submit" class="background-primary text-floral-white" [disabled]="loginForm.form.invalid">Submit</button>
     </mat-dialog-actions>
 </form>
