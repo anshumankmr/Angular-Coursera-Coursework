@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    Login 
+    <span class="flex-spacer"></span>
+    <button mat-button mat-dialog-close>  &times; </button>
+</mat-toolbar>
+<p> {{  user | json }} </p> 
+<!-- used to have the real time changes be shown in them object -->
+<form novalidate (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <p>
+            <mat-form-field>
+                <input matInput placeholder="User Name" type="text" name="username" [(ngModel)]="user.username"> 
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+                <input matInput placeholder="Password" type="text" name="Password" [(ngModel)]="user.password"> 
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="user.remember" name="Remember Me">
+            </mat-checkbox>
+        </p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <span class="flex-spacer"></span>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button type="submit" class="background-primary text-floral-white">Submit</button>
+    </mat-dialog-actions>
+</form>
