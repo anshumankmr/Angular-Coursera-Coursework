@@ -29,6 +29,8 @@ import { ContactComponent } from './contact/contact.component';
 
 import { DishService } from "./services/dish.service";
 import { PromotionService } from './services/promotion.service';
+import { LeaderService } from './services/leader.service';
+
 
 import { AppRoutingModule } from "./app-routing/app-routing.module";
 import { LoginComponent } from './login/login.component';
@@ -69,7 +71,7 @@ import { LoginComponent } from './login/login.component';
   ],
   exports: [ DishdetailComponent, MenuComponent ],
 
-  providers: [DishService,PromotionService] ,// a service that must be a provider will provide to the whole application
+  providers: [DishService,PromotionService,LeaderService] ,// a service that must be a provider will provide to the whole application
   bootstrap: [AppComponent]
 })
 export class AppModule { }
