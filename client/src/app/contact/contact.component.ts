@@ -2,7 +2,7 @@ import { Component, createPlatform, OnInit , ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms/';
 import { Feedback,ContactType  } from "../shared/feedback";
 import { flyInOut, expand } from '../animations/app.animation';
-
+import { FeedbackService } from '../services/feedback.service'
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -21,6 +21,11 @@ export class ContactComponent implements OnInit {
   feedbackForm!: FormGroup;
   feedback!: Feedback;
   contactType = ContactType;
+  feedbackCopy!: Feedback;
+  showSpinner = false;
+  showFeedbackForm = true;
+  showFeedback = false;
+  errMess !: string;
   @ViewChild('fform') feedbackFormDirective;
   formErrors = {
     'firstname': '',
@@ -48,7 +53,7 @@ export class ContactComponent implements OnInit {
       'email':         'Email not in valid format.'
     },
   };
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder,  private feedbackservice: FeedbackService) { 
     this.createForm();
   }
   createForm(){
@@ -90,6 +95,22 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     this.feedback = this.feedbackForm.value;//since this matches exactly, if they don't need matching, it must be mapped exactly
     console.log(this.feedback);
+    this.showFeedbackForm = false;
+    this.showSpinner = true;
+    this.feedbackservice.giveFeedback(this.feedback)
+      .subscribe(
+        feedback => {
+         this.feedbackCopy = feedback;
+         this.feedback = <any>null; 
+         setTimeout(() => { 
+           this.feedbackCopy = <any>null; 
+           this.showFeedbackForm = true 
+           this.showSpinner = false;
+          }, 5000); 
+        },
+        errMess => {
+          this.errMess = errMess;
+        });
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
