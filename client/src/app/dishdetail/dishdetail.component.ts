@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild , } from '@angular/core';
+import { Component, OnInit , ViewChild , Inject } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Dish } from '../shared/dish';
@@ -15,11 +15,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class DishdetailComponent implements OnInit {
   dish !: Dish;
   dishIds !: string[];
+  errMess !: string;
   prev !: string;
   next !: string;
   commentForm!: FormGroup;
   comment!: Comment;
   key!: string;
+  dishcopy !: Dish;
   @ViewChild('fform') commentFormDirective;
 
   formErrors = {
@@ -36,8 +38,9 @@ export class DishdetailComponent implements OnInit {
     }
   };
 
-  constructor(private dishService: DishService , private location: Location, private route: ActivatedRoute, private fb: FormBuilder) { 
+  constructor(private dishService: DishService , private location: Location, private route: ActivatedRoute, private fb: FormBuilder , @Inject('BaseURL') public BaseURL) { 
     this.createForm();
+    
   }
   formatLabel(value: number) {
     return value;
@@ -51,7 +54,9 @@ export class DishdetailComponent implements OnInit {
       date: new Date()
     });
     this.commentForm.valueChanges.
-    subscribe(data => this.onValueChanged(data));
+    subscribe(data => this.onValueChanged(data), errMess => {
+      this.errMess = <any>errMess;
+    });
     this.onValueChanged();
   }
   onValueChanged(data?: any) {
@@ -75,16 +80,22 @@ export class DishdetailComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    console.log(this.BaseURL);
     this.dishService.getDishIds().subscribe(dishIds => {
       this.dishIds = dishIds;
+    }, errMess => {
+      this.errMess = <any>errMess;
     });
     let id = this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id']))).subscribe(x => {
       this.dish = x;
+      this.dishcopy = x;
       // this.clearForm();
       this.setPrevNext(this.dish.id);
-      if (localStorage.getItem(this.key)){
-        this.dish.comments = (JSON.parse(localStorage.getItem(this.key)!));
-      } 
+      // if (localStorage.getItem(this.key)){
+      //   this.dish.comments = (JSON.parse(localStorage.getItem(this.key)!));
+      // } 
+    }, errMess => {
+      this.errMess = <any>errMess;
     });
   }
   setPrevNext(dishId: string){
@@ -113,8 +124,16 @@ export class DishdetailComponent implements OnInit {
   onSubmit(): void{
     this.comment = this.commentForm.value;
     console.log(this.comment, this.dish.comments);
-    this.dish.comments?.push(this.comment);
-    this.saveToSession(this.dish.id, this.dish.comments);
+    this.dishcopy.comments?.push(this.comment);
+    this.dishService.putDish(this.dishcopy).subscribe(dish => {
+      this.dish = dish;
+      this.dishcopy = dish;
+    }, errMess => {
+      this.errMess = <any>errMess;
+      this.dish = <any>null;
+      this.dishcopy = <any>null;
+    });
+    // this.saveToSession(this.dish.id, this.dish.comments);
     this.clearForm();
   }
   goBack(): void {

@@ -14,7 +14,7 @@
             </mat-card-title>
 
         </mat-card-header>
-         <img mat-card-image  src={{dish.image}} alt={{dish.name}}>
+         <img mat-card-image  src="{{  BaseURL + dish.image }}" alt={{dish.name}}>
         <mat-card-content>
             <p> {{dish.description}} </p>
         </mat-card-content> 
@@ -27,7 +27,7 @@
             <button mat-button>
                 LIKE      
             </button>
-            <button mat-button (click)="clearStorage()">
+            <button mat-button >
                 SHARE
             </button>
             <span class="flex-spacer"></span>
@@ -78,9 +78,13 @@
       </form>
     </mat-card>
   </div>
-  <div fxFlex [hidden]="dish">
+  <div fxFlex [hidden]="dish  || errMess">
     <mat-spinner>
     </mat-spinner>
     <h4> Loading... Please Wait </h4>
+  </div>
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
   </div>
 </div>

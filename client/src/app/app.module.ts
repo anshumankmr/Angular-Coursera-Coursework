@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import  { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,10 +33,12 @@ import { ContactComponent } from './contact/contact.component';
 import { DishService } from "./services/dish.service";
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
-
+import  { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { AppRoutingModule } from "./app-routing/app-routing.module";
 import { LoginComponent } from './login/login.component';
+
+import { baseURL } from "./shared/baseURL"
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,14 +71,21 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule
   ],
   entryComponents:[
     LoginComponent
   ],
   exports: [ DishdetailComponent, MenuComponent ],
 
-  providers: [DishService,PromotionService,LeaderService] ,// a service that must be a provider will provide to the whole application
+  providers: [
+    DishService,
+    PromotionService,
+    LeaderService,
+    ProcessHTTPMsgService,
+    { provide:'BaseURL' , useValue: baseURL }
+  ] ,// a service that must be a provider will provide to the whole application
   bootstrap: [AppComponent]
 })
 export class AppModule { }
