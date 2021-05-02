@@ -38,7 +38,8 @@ import  { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { AppRoutingModule } from "./app-routing/app-routing.module";
 import { LoginComponent } from './login/login.component';
 
-import { baseURL } from "./shared/baseURL"
+import { baseURL } from "./shared/baseURL";
+import { HighlightDirective } from './directives/highlight.directive'
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { baseURL } from "./shared/baseURL"
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
